@@ -1,0 +1,139 @@
+Job started on iris-111
+SLURM_JOB_ID=5386100
+ITCH_INPUT=/scratch/users/hashar/itch-data-pipeline/data/nasdaq_bx_itch/20191230.BX_ITCH_50.gz
+ITCH_DATE=2019-12-30
+OUTPUT_ROOT=/scratch/users/hashar/itch-data-pipeline/outputs/hpc
+MAX_MESSAGES=1000000
+REPORT_PATH=/scratch/users/hashar/itch-data-pipeline/reports/week6_showcase.md
+itch-data-pipeline healthcheck: OK
+Python package import: OK
+Core starter utilities: OK
+{
+  "installed": true,
+  "version": "unknown"
+}
+{
+  "manifest_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc/dataset=message_events/date=2019-12-30/symbol=ALL/manifest.json",
+  "parquet_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc/dataset=message_events/date=2019-12-30/symbol=ALL/part-000.parquet",
+  "rows_written": 1000000
+}
+{
+  "rules_failed": 0,
+  "rules_run": 4,
+  "status": "passed",
+  "validation_report_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc/dataset=message_events/date=2019-12-30/symbol=ALL/validation_report.json"
+}
+{
+  "manifest_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc/dataset=order_events/date=2019-12-30/symbol=ALL/manifest.json",
+  "parquet_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc/dataset=order_events/date=2019-12-30/symbol=ALL/part-000.parquet",
+  "rows_written": 796151
+}
+{
+  "rules_failed": 0,
+  "rules_run": 7,
+  "status": "passed",
+  "validation_report_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc/dataset=order_events/date=2019-12-30/symbol=ALL/validation_report.json"
+}
+{
+  "activity_counts": {
+    "add": 384095,
+    "cancel": 5367,
+    "delete": 332461,
+    "execute": 7062,
+    "replace": 67166
+  },
+  "event_counts": [
+    {
+      "event_type": "add",
+      "row_count": 384095
+    },
+    {
+      "event_type": "delete",
+      "row_count": 332461
+    },
+    {
+      "event_type": "replace",
+      "row_count": 67166
+    },
+    {
+      "event_type": "execute",
+      "row_count": 7062
+    },
+    {
+      "event_type": "cancel",
+      "row_count": 5367
+    }
+  ],
+  "side_counts": [
+    {
+      "row_count": 194211,
+      "side": "S",
+      "total_shares": 131860740
+    },
+    {
+      "row_count": 189884,
+      "side": "B",
+      "total_shares": 125411200
+    }
+  ],
+  "top_stocks_by_adds": [
+    {
+      "add_count": 11908,
+      "stock": "SPY",
+      "total_add_shares": 2842467
+    },
+    {
+      "add_count": 10334,
+      "stock": "QQQ",
+      "total_add_shares": 2409774
+    },
+    {
+      "add_count": 8140,
+      "stock": "TQQQ",
+      "total_add_shares": 1141374
+    },
+    {
+      "add_count": 7434,
+      "stock": "UGAZ",
+      "total_add_shares": 1374200
+    },
+    {
+      "add_count": 5380,
+      "stock": "IWM",
+      "total_add_shares": 2946400
+    },
+    {
+      "add_count": 4429,
+      "stock": "KOLD",
+      "total_add_shares": 825500
+    },
+    {
+      "add_count": 4208,
+      "stock": "UCO",
+      "total_add_shares": 4647300
+    },
+    {
+      "add_count": 4008,
+      "stock": "USO",
+      "total_add_shares": 33414600
+    },
+    {
+      "add_count": 3235,
+      "stock": "SQQQ",
+      "total_add_shares": 1293363
+    },
+    {
+      "add_count": 2980,
+      "stock": "VXX",
+      "total_add_shares": 1019207
+    }
+  ]
+}
+{
+  "message_events_row_count": 1000000,
+  "message_events_validation_status": "passed",
+  "order_events_row_count": 796151,
+  "order_events_validation_status": "passed",
+  "report_path": "/scratch/users/hashar/itch-data-pipeline/reports/week6_showcase.md"
+}
+Job finished

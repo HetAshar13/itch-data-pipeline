@@ -1,0 +1,13 @@
+current_version: "1.0"
+
+versions:
+  "1.0":
+    released: "2026-04-30"
+    changelog: "Initial schema for starter project. Defines manifests and planned output datasets."
+    datasets:
+      - order_events
+      - top_of_book_snapshots
+      - depth_snapshots
+      - exec_trades
+      - run_manifests
+      - validation_reports

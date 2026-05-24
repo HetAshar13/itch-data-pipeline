@@ -1,0 +1,13 @@
+{
+  "avg_level1_imbalance": 0.006743096011588524,
+  "avg_spread_1_raw": 362.34075735538926,
+  "first_timestamp_ns": 25210229580863,
+  "last_timestamp_ns": 38898800167288,
+  "max_spread_1_raw": 110900,
+  "median_spread_1_raw": 300.0,
+  "min_spread_1_raw": 100,
+  "snapshot_count": 172052,
+  "symbol": "QQQ",
+  "two_sided_snapshot_count": 171201,
+  "two_sided_snapshot_percent": 99.5053820937856
+}

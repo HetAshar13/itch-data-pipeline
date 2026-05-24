@@ -1,0 +1,69 @@
+{
+  "dataset": "lob_snapshots",
+  "date": "2019-12-30",
+  "findings": [
+    {
+      "message": "Parquet file exists.",
+      "rule_name": "parquet_file_exists",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    },
+    {
+      "message": "All expected columns are present.",
+      "rule_name": "expected_columns_present",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    },
+    {
+      "message": "Row count is 172052.",
+      "rule_name": "row_count_positive",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    },
+    {
+      "message": "Manifest count=172052, Parquet count=172052.",
+      "rule_name": "manifest_row_count_matches_parquet",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    },
+    {
+      "message": "All rows contain symbol=QQQ.",
+      "rule_name": "single_requested_symbol",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    },
+    {
+      "message": "Sequence numbers are monotonically increasing.",
+      "rule_name": "sequence_numbers_increasing",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    },
+    {
+      "message": "Timestamps are monotonically non-decreasing.",
+      "rule_name": "timestamps_non_decreasing",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    },
+    {
+      "message": "Top of book is not crossed where both sides exist.",
+      "rule_name": "top_of_book_not_crossed",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    }
+  ],
+  "manifest_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc_lob_scale10m/dataset=lob_snapshots/date=2019-12-30/symbol=QQQ/manifest.json",
+  "parquet_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc_lob_scale10m/dataset=lob_snapshots/date=2019-12-30/symbol=QQQ/part-000.parquet",
+  "row_count": 172052,
+  "rules_failed": 0,
+  "rules_run": 8,
+  "status": "passed",
+  "symbol": "QQQ"
+}

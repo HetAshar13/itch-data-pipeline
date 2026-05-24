@@ -1,0 +1,3 @@
+2026-05-14 20:53:10,705 | INFO | itch_data_pipeline.runner.extract_lob_snapshots_sample | Starting until_eof ITCH 5.0 LOB snapshot extraction for /scratch/users/hashar/itch-data-pipeline/data/nasdaq_bx_itch/20191230.BX_ITCH_50.gz symbol=SPY max_messages=None
+2026-05-14 21:48:07,397 | INFO | itch_data_pipeline.runner.extract_lob_snapshots_sample | Wrote lob_snapshots Parquet to /scratch/users/hashar/itch-data-pipeline/outputs/hpc_lob_until_eof/dataset=lob_snapshots/date=2019-12-30/symbol=SPY/part-000.parquet
+2026-05-14 21:48:08,365 | INFO | itch_data_pipeline.runner.extract_lob_snapshots_sample | Wrote lob_snapshots manifest to /scratch/users/hashar/itch-data-pipeline/outputs/hpc_lob_until_eof/dataset=lob_snapshots/date=2019-12-30/symbol=SPY/manifest.json

@@ -1,0 +1,19 @@
+{
+  "date": "2019-05-30",
+  "duration_seconds": 0,
+  "end_time": "2026-04-30T09:20:09.152013+00:00",
+  "input_file": "sample_data/20190530.BX_ITCH_50.gz",
+  "meatpy_version": "unknown",
+  "output_paths": [],
+  "row_counts": {},
+  "run_id": "sample_run_001",
+  "schema_version": "1.0",
+  "start_time": "2026-04-30T09:20:09.152013+00:00",
+  "status": "sample",
+  "symbol": "AAPL",
+  "validation_summary": {
+    "rules_failed": 0,
+    "rules_run": 0,
+    "status": "not_run"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "dataset": "order_events",
+  "date": "2019-12-30",
+  "findings": [
+    {
+      "message": "Parquet file exists.",
+      "rule_name": "parquet_file_exists",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    },
+    {
+      "message": "All expected columns are present.",
+      "rule_name": "expected_columns_present",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    },
+    {
+      "message": "Row count is 796151.",
+      "rule_name": "row_count_positive",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    },
+    {
+      "message": "Manifest count=796151, Parquet count=796151.",
+      "rule_name": "manifest_row_count_matches_parquet",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    },
+    {
+      "message": "All order event rows have an event_type.",
+      "rule_name": "event_type_present",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    },
+    {
+      "message": "All order event rows have the expected order reference fields.",
+      "rule_name": "order_refs_present",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    },
+    {
+      "message": "Sequence numbers are monotonically increasing.",
+      "rule_name": "sequence_numbers_increasing",
+      "severity": "high",
+      "status": "passed",
+      "violations": 0
+    }
+  ],
+  "manifest_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc/dataset=order_events/date=2019-12-30/symbol=ALL/manifest.json",
+  "parquet_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc/dataset=order_events/date=2019-12-30/symbol=ALL/part-000.parquet",
+  "row_count": 796151,
+  "rules_failed": 0,
+  "rules_run": 7,
+  "status": "passed",
+  "symbol": "ALL"
+}

@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Run tests
+        run: python -m pytest
+
+      - name: Run healthcheck
+        run: python -m itch_data_pipeline.cli healthcheck
+
+      - name: Check raw-data safety
+        run: python -m itch_data_pipeline.cli check-raw-data-safety

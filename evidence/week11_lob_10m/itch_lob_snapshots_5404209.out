@@ -1,0 +1,40 @@
+Job started on iris-111
+SLURM_JOB_ID=5404209
+ITCH_INPUT=/scratch/users/hashar/itch-data-pipeline/data/nasdaq_bx_itch/20191230.BX_ITCH_50.gz
+ITCH_DATE=2019-12-30
+SYMBOL=SPY
+OUTPUT_ROOT=/scratch/users/hashar/itch-data-pipeline/outputs/hpc_lob_scale10m
+MAX_MESSAGES=10000000
+SUMMARY_PATH=/scratch/users/hashar/itch-data-pipeline/reports/lob_summary_SPY_2019-12-30_10m.json
+itch-data-pipeline healthcheck: OK
+Python package import: OK
+Core starter utilities: OK
+{
+  "installed": true,
+  "version": "unknown"
+}
+{
+  "manifest_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc_lob_scale10m/dataset=lob_snapshots/date=2019-12-30/symbol=SPY/manifest.json",
+  "parquet_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc_lob_scale10m/dataset=lob_snapshots/date=2019-12-30/symbol=SPY/part-000.parquet",
+  "rows_written": 206927
+}
+{
+  "rules_failed": 0,
+  "rules_run": 8,
+  "status": "passed",
+  "validation_report_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc_lob_scale10m/dataset=lob_snapshots/date=2019-12-30/symbol=SPY/validation_report.json"
+}
+{
+  "avg_level1_imbalance": 0.013739799889758,
+  "avg_spread_1_raw": 325.67240945917206,
+  "first_timestamp_ns": 25204435833095,
+  "last_timestamp_ns": 38898750391078,
+  "max_spread_1_raw": 7100,
+  "median_spread_1_raw": 300.0,
+  "min_spread_1_raw": 100,
+  "snapshot_count": 206927,
+  "symbol": "SPY",
+  "two_sided_snapshot_count": 206868,
+  "two_sided_snapshot_percent": 99.9714875294186
+}
+Job finished

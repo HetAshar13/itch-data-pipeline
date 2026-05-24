@@ -1,0 +1,42 @@
+Job started on iris-111
+SLURM_JOB_ID=5406828
+RUN_MODE=until_eof
+ITCH_INPUT=/scratch/users/hashar/itch-data-pipeline/data/nasdaq_bx_itch/20191230.BX_ITCH_50.gz
+ITCH_DATE=2019-12-30
+SYMBOL=SPY
+OUTPUT_ROOT=/scratch/users/hashar/itch-data-pipeline/outputs/hpc_lob_until_eof
+SUMMARY_PATH=/scratch/users/hashar/itch-data-pipeline/reports/lob_summary_SPY_2019-12-30_until_eof.json
+itch-data-pipeline healthcheck: OK
+Python package import: OK
+Core starter utilities: OK
+{
+  "installed": true,
+  "version": "0.5.0"
+}
+{
+  "manifest_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc_lob_until_eof/dataset=lob_snapshots/date=2019-12-30/symbol=SPY/manifest.json",
+  "messages_scanned": 29156757,
+  "parquet_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc_lob_until_eof/dataset=lob_snapshots/date=2019-12-30/symbol=SPY/part-000.parquet",
+  "rows_written": 614578,
+  "stop_reason": "eof"
+}
+{
+  "rules_failed": 0,
+  "rules_run": 8,
+  "status": "passed",
+  "validation_report_path": "/scratch/users/hashar/itch-data-pipeline/outputs/hpc_lob_until_eof/dataset=lob_snapshots/date=2019-12-30/symbol=SPY/validation_report.json"
+}
+{
+  "avg_level1_imbalance": -0.034328613499084,
+  "avg_spread_1_raw": 270.75026168890685,
+  "first_timestamp_ns": 25204435833095,
+  "last_timestamp_ns": 68400000103180,
+  "max_spread_1_raw": 7100,
+  "median_spread_1_raw": 200.0,
+  "min_spread_1_raw": 100,
+  "snapshot_count": 614578,
+  "symbol": "SPY",
+  "two_sided_snapshot_count": 614279,
+  "two_sided_snapshot_percent": 99.9513487303483
+}
+Job finished

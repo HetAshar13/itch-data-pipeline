@@ -1,0 +1,32 @@
+{
+  "dataset": "lob_snapshots",
+  "date": "2019-12-30",
+  "duration_seconds": 144.960816,
+  "end_time": "2026-05-12T05:29:58.916464+00:00",
+  "exception_counts": {},
+  "input_file": "/scratch/users/hashar/itch-data-pipeline/data/nasdaq_bx_itch/20191230.BX_ITCH_50.gz",
+  "input_sha256": "b7a56dafeaa8300308e24828b21f5595909b0fff3b5182b5c2f160917f76302f",
+  "max_messages": 10000000,
+  "meatpy_probe": {
+    "installed": true,
+    "version": "unknown"
+  },
+  "meatpy_version": "unknown",
+  "output_paths": [
+    "/scratch/users/hashar/itch-data-pipeline/outputs/hpc_lob_scale10m/dataset=lob_snapshots/date=2019-12-30/symbol=IWM/part-000.parquet"
+  ],
+  "row_counts": {
+    "lob_snapshots": 156647
+  },
+  "run_id": "extract_lob_snapshots_sample_20260512T052733955648Z",
+  "schema_version": "1.0",
+  "snapshot_depth": 5,
+  "start_time": "2026-05-12T05:27:33.955648+00:00",
+  "status": "success",
+  "symbol": "IWM",
+  "validation_summary": {
+    "rules_failed": 0,
+    "rules_run": 0,
+    "status": "not_run"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "run_id": "sample_run_001",
+  "date": "2019-05-30",
+  "symbol": "AAPL",
+  "summary": {
+    "status": "not_run",
+    "rules_run": 0,
+    "rules_failed": 0
+  },
+  "rules": []
+}

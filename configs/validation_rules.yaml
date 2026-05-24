@@ -1,0 +1,25 @@
+rules:
+  - name: cancel_references_existing_active_order
+    enabled: false
+    severity: high
+    phase: future
+  - name: replace_references_existing_active_order
+    enabled: false
+    severity: high
+    phase: future
+  - name: execute_references_existing_order
+    enabled: false
+    severity: high
+    phase: future
+  - name: no_negative_remaining_volume
+    enabled: false
+    severity: high
+    phase: future
+  - name: timestamps_non_decreasing
+    enabled: false
+    severity: medium
+    phase: future
+  - name: valid_top_of_book_state
+    enabled: false
+    severity: medium
+    phase: future

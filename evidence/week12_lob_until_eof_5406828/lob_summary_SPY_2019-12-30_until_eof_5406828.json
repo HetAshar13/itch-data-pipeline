@@ -1,0 +1,13 @@
+{
+  "avg_level1_imbalance": -0.034328613499084,
+  "avg_spread_1_raw": 270.75026168890685,
+  "first_timestamp_ns": 25204435833095,
+  "last_timestamp_ns": 68400000103180,
+  "max_spread_1_raw": 7100,
+  "median_spread_1_raw": 200.0,
+  "min_spread_1_raw": 100,
+  "snapshot_count": 614578,
+  "symbol": "SPY",
+  "two_sided_snapshot_count": 614279,
+  "two_sided_snapshot_percent": 99.9513487303483
+}

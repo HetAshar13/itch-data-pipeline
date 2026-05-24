@@ -1,0 +1,9 @@
+{
+  "batch_id": "sample_batch_001",
+  "summary": {
+    "symbols_processed": 0,
+    "clean_symbols": 0,
+    "flagged_symbols": 0,
+    "status": "not_run"
+  }
+}

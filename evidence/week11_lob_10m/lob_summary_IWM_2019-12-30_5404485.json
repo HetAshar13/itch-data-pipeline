@@ -1,0 +1,13 @@
+{
+  "avg_level1_imbalance": 0.13574819077244718,
+  "avg_spread_1_raw": 288.22502935081764,
+  "first_timestamp_ns": 25220804831168,
+  "last_timestamp_ns": 38898750746659,
+  "max_spread_1_raw": 75200,
+  "median_spread_1_raw": 300.0,
+  "min_spread_1_raw": 100,
+  "snapshot_count": 156647,
+  "symbol": "IWM",
+  "two_sided_snapshot_count": 155873,
+  "two_sided_snapshot_percent": 99.50589542091454
+}
