@@ -95,11 +95,11 @@ def _render_markdown(
     side_rows = _markdown_rows(order_summary["side_counts"], ["side", "row_count", "total_shares"])
     stock_rows = _markdown_rows(order_summary["top_stocks_by_adds"], ["stock", "add_count", "total_add_shares"])
 
-    return f"""# Week 6 Showcase Report
+    return f"""# Event Pipeline Showcase Report
 
 ## Summary
 
-This report extends the Week 4 pipeline from generic ITCH message events to a bounded order-event dataset. It still uses MeatPy for ITCH message reading and keeps Streamlit as a presentation layer over generated artifacts.
+This report extends generic ITCH message events with a bounded order-event dataset. It still uses MeatPy for ITCH message reading and keeps Streamlit as a presentation layer over generated artifacts.
 
 ## Run Metadata
 
@@ -152,7 +152,7 @@ This report extends the Week 4 pipeline from generic ITCH message events to a bo
 - The project can derive a second, order-event-focused Parquet dataset.
 - Both datasets have manifests and structural validation reports.
 - DuckDB can query message-level and order-event-level outputs directly.
-- Streamlit can present Week 6 artifacts without running pipeline logic.
+- Streamlit can present event artifacts without running pipeline logic.
 
 ## What This Does Not Prove Yet
 

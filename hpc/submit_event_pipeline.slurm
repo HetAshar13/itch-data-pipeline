@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=itch_week6_showcase
+#SBATCH --job-name=itch_event_pipeline
 #SBATCH --output=logs/hpc/%x_%j.out
 #SBATCH --error=logs/hpc/%x_%j.err
 #SBATCH --time=01:00:00
@@ -12,7 +12,7 @@ set -euo pipefail
 ITCH_DATE="${ITCH_DATE:-2019-12-30}"
 OUTPUT_ROOT="${OUTPUT_ROOT:-outputs/hpc}"
 MAX_MESSAGES="${MAX_MESSAGES:-1000000}"
-REPORT_PATH="${REPORT_PATH:-reports/week6_showcase.md}"
+REPORT_PATH="${REPORT_PATH:-reports/event_pipeline_showcase.md}"
 
 mkdir -p logs/hpc reports
 
@@ -52,7 +52,7 @@ python -m itch_data_pipeline.cli query-order-event-summary \
   --date "$ITCH_DATE" \
   --limit 10
 
-python -m itch_data_pipeline.cli write-week6-report \
+python -m itch_data_pipeline.cli write-event-pipeline-report \
   --output-root "$OUTPUT_ROOT" \
   --date "$ITCH_DATE" \
   --report-path "$REPORT_PATH" \

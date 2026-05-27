@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 st.title("HPC Market Data Engineering Pipeline")
-st.caption("Week 4 showcase: real Nasdaq BX ITCH sample -> MeatPy -> Parquet -> validation -> DuckDB summary")
+st.caption("Presentation layer for existing ITCH pipeline artifacts: MeatPy -> Parquet -> validation -> DuckDB summary")
 
 with st.sidebar:
     st.header("Run Selection")
@@ -73,7 +73,7 @@ st.dataframe(pd.DataFrame(context["sample_rows"]), width="stretch", hide_index=T
 
 order_events = context["order_events"]
 if order_events["available"]:
-    st.subheader("Week 6 Order Events")
+    st.subheader("Order Events")
     order_manifest = order_events["manifest"]
     order_validation = order_events["validation"]
     order_row_count = order_manifest["row_counts"]["order_events"]
@@ -104,7 +104,7 @@ st.markdown(
 - The manifest records reproducibility metadata.
 - Structural validation checks the output before presentation.
 - DuckDB-style analytics summarize the Parquet output.
-- When Week 6 artifacts exist, order-event summaries are presented without running extraction.
+- When order-event artifacts exist, order-event summaries are presented without running extraction.
 """
 )
 
@@ -112,8 +112,8 @@ st.subheader("Current Boundaries")
 st.markdown(
     """
 - This app does not parse raw ITCH files.
-- It does not reconstruct the full order book.
-- It does not run SLURM jobs yet.
+- It does not reconstruct the order book or run extraction jobs.
+- It does not run SLURM jobs.
 - It is a presentation layer over existing pipeline artifacts.
 """
 )

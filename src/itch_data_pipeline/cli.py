@@ -168,9 +168,26 @@ def write_week6_report(
     print(json.dumps(result, indent=2, sort_keys=True))
 
 
+def write_event_pipeline_report(
+    output_root: str,
+    date: str,
+    symbol: str = "ALL",
+    report_path: str = "reports/event_pipeline_showcase.md",
+    top_n: int = 10,
+) -> None:
+    result = build_week6_showcase_report(
+        output_root=output_root,
+        date=date,
+        symbol=symbol,
+        report_path=report_path,
+        top_n=top_n,
+    )
+    print(json.dumps(result, indent=2, sort_keys=True))
+
+
 def write_week12_report(
     proof_root: str = "logs",
-    report_path: str = "reports/week12_final_report.md",
+    report_path: str = "reports/final_evidence_report.md",
 ) -> None:
     result = build_week12_final_report(
         proof_root=proof_root,
@@ -305,7 +322,7 @@ def main() -> None:
 
     report_parser = sub.add_parser(
         "write-week4-report",
-        help="Write a Markdown showcase report from existing Week 4 artifacts.",
+        help="Write a legacy message-event Markdown showcase report from existing artifacts.",
     )
     report_parser.add_argument("--output-root", default="outputs/local", help="Root directory containing outputs.")
     report_parser.add_argument("--date", required=True, help="Date partition to report.")
@@ -315,7 +332,7 @@ def main() -> None:
 
     week6_report_parser = sub.add_parser(
         "write-week6-report",
-        help="Write a Week 6 Markdown showcase report from existing artifacts.",
+        help="Write a legacy event-pipeline Markdown showcase report from existing artifacts.",
     )
     week6_report_parser.add_argument("--output-root", default="outputs/local", help="Root directory containing outputs.")
     week6_report_parser.add_argument("--date", required=True, help="Date partition to report.")
@@ -323,14 +340,28 @@ def main() -> None:
     week6_report_parser.add_argument("--report-path", default="reports/week6_showcase.md", help="Markdown report path.")
     week6_report_parser.add_argument("--top-n", type=int, default=10, help="Number of ranked rows to include.")
 
+    event_report_parser = sub.add_parser(
+        "write-event-pipeline-report",
+        help="Write a Markdown report for message_events and order_events artifacts.",
+    )
+    event_report_parser.add_argument("--output-root", default="outputs/local", help="Root directory containing outputs.")
+    event_report_parser.add_argument("--date", required=True, help="Date partition to report.")
+    event_report_parser.add_argument("--symbol", default="ALL", help="Symbol partition to report.")
+    event_report_parser.add_argument(
+        "--report-path",
+        default="reports/event_pipeline_showcase.md",
+        help="Markdown report path.",
+    )
+    event_report_parser.add_argument("--top-n", type=int, default=10, help="Number of ranked rows to include.")
+
     week12_report_parser = sub.add_parser(
         "write-week12-report",
-        help="Write a Week 12 final evidence report from copied proof artifacts.",
+        help="Write the final evidence report from copied proof artifacts.",
     )
     week12_report_parser.add_argument("--proof-root", default="logs", help="Directory containing copied proof artifacts.")
     week12_report_parser.add_argument(
         "--report-path",
-        default="reports/week12_final_report.md",
+        default="reports/final_evidence_report.md",
         help="Markdown report path.",
     )
 
@@ -439,6 +470,14 @@ def main() -> None:
         )
     elif args.command == "write-week6-report":
         write_week6_report(
+            args.output_root,
+            date=args.date,
+            symbol=args.symbol,
+            report_path=args.report_path,
+            top_n=args.top_n,
+        )
+    elif args.command == "write-event-pipeline-report":
+        write_event_pipeline_report(
             args.output_root,
             date=args.date,
             symbol=args.symbol,

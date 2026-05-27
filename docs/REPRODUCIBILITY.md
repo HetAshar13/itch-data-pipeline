@@ -112,5 +112,5 @@ Do not share raw ITCH files or large Parquet outputs.
 - Local Windows tests pass.
 - CI workflow is configured for tests, healthcheck, and raw-data safety.
 - Docker image builds and passes tests, healthcheck, and raw-data safety.
-- Iris proof exists for Week 6 bounded extraction, Week 10-11 LOB runs, and
-  Week 12 `SPY` until-EOF LOB extraction.
+- Iris proof exists for bounded event extraction, bounded multi-symbol LOB
+  runs, and the final `SPY` until-EOF LOB extraction.

@@ -55,7 +55,7 @@ def test_build_week4_showcase_report_writes_markdown(monkeypatch, tmp_path: Path
     assert result["report_path"] == str(report_path)
     assert result["row_count"] == 100
     assert result["validation_status"] == "passed"
-    assert "Week 4 Showcase Report" in content
+    assert "Message Event Showcase Report" in content
     assert "| A | AddOrderMessage | 60 |" in content
     assert "What This Does Not Prove Yet" in content
     assert "The Streamlit app exists as a thin presentation layer over these artifacts." in content

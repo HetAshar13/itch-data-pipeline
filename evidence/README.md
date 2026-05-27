@@ -28,9 +28,9 @@ data files and do not make the underlying licensed data public.
 
 | Directory | Purpose |
 | --- | --- |
-| `week6_hpc/` | Bounded `message_events` and `order_events` HPC proof from job `5386100`. |
-| `week11_lob_10m/` | Bounded `10,000,000` message LOB proof for `SPY`, `QQQ`, and `IWM`. |
-| `week12_lob_until_eof_5406828/` | SPY until-EOF LOB proof from job `5406828`. |
+| `event_pipeline_hpc/` | Bounded `message_events` and `order_events` HPC proof from job `5386100`. |
+| `lob_10m_multi_symbol/` | Bounded `10,000,000` message LOB proof for `SPY`, `QQQ`, and `IWM`. |
+| `lob_spy_until_eof_5406828/` | SPY until-EOF LOB proof from job `5406828`. |
 
 Use this directory with:
 

@@ -70,7 +70,7 @@ def _render_markdown(
         f"| {row['message_type']} | {row['message_class']} | {row['row_count']} |"
         for row in top_message_types
     )
-    return f"""# Week 4 Showcase Report
+    return f"""# Message Event Showcase Report
 
 ## Summary
 
@@ -111,7 +111,7 @@ This report demonstrates a bounded, reproducible data engineering path over a re
 ## What This Does Not Prove Yet
 
 - It does not prove full order book correctness.
-- It does not implement full symbol/day processing.
-- It does not run SLURM jobs yet.
+- It does not run the LOB snapshot pipeline.
+- It does not run SLURM jobs.
 - It does not make Streamlit responsible for pipeline execution.
 """

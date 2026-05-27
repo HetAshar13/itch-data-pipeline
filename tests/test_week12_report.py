@@ -87,12 +87,14 @@ def write_lob_until_eof_proof(proof_dir: Path, *, symbol: str, job_id: str, mess
 
 def write_week12_proof_root(proof_root: Path) -> None:
     proof_root.mkdir(parents=True, exist_ok=True)
-    (proof_root / "hpc_week6_5386100.out").write_text(
+    event_proof = proof_root / "event_pipeline_hpc"
+    event_proof.mkdir(parents=True, exist_ok=True)
+    (event_proof / "event_pipeline_5386100.out").write_text(
         "Job started on iris-111\nSLURM_JOB_ID=5386100\nJob finished\n",
         encoding="utf-8",
     )
     write_json(
-        proof_root / "hpc_message_events_validation_5386100.json",
+        event_proof / "hpc_message_events_validation_5386100.json",
         {
             "row_count": 100,
             "status": "passed",
@@ -101,7 +103,7 @@ def write_week12_proof_root(proof_root: Path) -> None:
         },
     )
     write_json(
-        proof_root / "hpc_order_events_validation_5386100.json",
+        event_proof / "hpc_order_events_validation_5386100.json",
         {
             "row_count": 75,
             "status": "passed",
@@ -111,9 +113,9 @@ def write_week12_proof_root(proof_root: Path) -> None:
     )
     write_lob_proof(proof_root / "week10_lob_5404108", symbol="SPY", job_id="5404108", max_messages=2_000_000, snapshots=10)
     write_lob_proof(proof_root / "week11_lob_2m", symbol="QQQ", job_id="5404160", max_messages=2_000_000, snapshots=20)
-    write_lob_proof(proof_root / "week11_lob_10m", symbol="SPY", job_id="5404209", max_messages=10_000_000, snapshots=30)
+    write_lob_proof(proof_root / "lob_10m_multi_symbol", symbol="SPY", job_id="5404209", max_messages=10_000_000, snapshots=30)
     write_lob_until_eof_proof(
-        proof_root / "week12_lob_until_eof_5406828",
+        proof_root / "lob_spy_until_eof_5406828",
         symbol="SPY",
         job_id="5406828",
         messages_scanned=29156757,
@@ -139,10 +141,10 @@ def test_build_week12_final_report_reads_copied_proof_artifacts(tmp_path: Path):
     assert result["week12_until_eof_lob_runs"] == 1
     assert result["week12_until_eof_messages_scanned"] == 29156757
     assert result["week12_until_eof_snapshots"] == 40
-    assert "Week 12 Final Evidence Report" in content
+    assert "Final Evidence Report" in content
     assert "| `message_events` | `5386100` | `iris-111` | `100` | passed | `4` | `0` |" in content
     assert "| SPY | `5404209` | `10000000` | `30` | `passed` | `8` | `0` | `99.5000%` | `300.0` |" in content
-    assert "Week 12 SPY Until-EOF LOB Proof" in content
+    assert "SPY Until-EOF LOB Proof" in content
     assert "| SPY | `5406828` | `iris-111` | `until_eof` | `eof` | `29156757` | `40` | `passed` | `8` | `0` | `99.9000%` | `200.0` |" in content
     assert "Raw Nasdaq data" in content
     assert "large Parquet outputs remain outside Git" in content

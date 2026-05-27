@@ -133,8 +133,8 @@ Excluded from Git:
 - [Data Contracts](docs/DATA_CONTRACTS.md)
 - [Reproducibility Guide](docs/REPRODUCIBILITY.md)
 - [Operations Runbook](docs/OPERATIONS_RUNBOOK.md)
+- [Professor Showcase Guide](docs/PROFESSOR_SHOWCASE_GUIDE.md)
 - [Decisions Log](docs/DECISIONS.md)
-- [Learning Archive](docs/archive/README.md)
 
 ## Limitations
 

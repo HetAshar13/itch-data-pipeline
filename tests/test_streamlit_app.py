@@ -93,5 +93,5 @@ def test_streamlit_app_renders_week6_sections(tmp_path: Path):
     app.run(timeout=30)
 
     assert len(app.exception) == 0
-    assert "Week 6 Order Events" in [subheader.value for subheader in app.subheader]
+    assert "Order Events" in [subheader.value for subheader in app.subheader]
     assert "Order events" in [metric.label for metric in app.metric]

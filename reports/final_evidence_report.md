@@ -16,9 +16,9 @@ large Parquet outputs remain outside Git.
 - Trading date: `2019-12-30`
 - Input SHA-256: `b7a56dafeaa8300308e24828b21f5595909b0fff3b5182b5c2f160917f76302f`
 - Raw data policy: raw Nasdaq data is not copied into Git or public reports.
-- Proof source: copied logs, manifests, validation JSON files, and DuckDB summary JSON files under `logs/`.
+- Proof source: copied logs, manifests, validation JSON files, and DuckDB summary JSON files under the curated `evidence/` directory.
 
-## Week 6 Message And Order Event Proof
+## Message And Order Event HPC Proof
 
 | Dataset | Job ID | Node | Rows | Validation | Rules Run | Rules Failed |
 | --- | --- | --- | ---: | --- | ---: | ---: |
@@ -28,13 +28,13 @@ large Parquet outputs remain outside Git.
 This proves the project can turn parsed ITCH messages into broad audit data and
 focused order-event data, with structural validation and reproducible HPC proof.
 
-## Week 10 Single-Symbol LOB Proof
+## Single-Symbol LOB Smoke Proof
 
 | Symbol | Job ID | Max Messages | Snapshots | Validation | Rules Run | Rules Failed | Two-Sided % | Median Spread Raw |
 | --- | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: |
 | SPY | `5404108` | `2000000` | `59163` | `passed` | `8` | `0` | `99.9003%` | `300.0` |
 
-## Week 11 Multi-Symbol LOB Proof: 2M Bound
+## Multi-Symbol LOB Proof: 2M Bound
 
 | Symbol | Job ID | Max Messages | Snapshots | Validation | Rules Run | Rules Failed | Two-Sided % | Median Spread Raw |
 | --- | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: |
@@ -42,7 +42,7 @@ focused order-event data, with structural validation and reproducible HPC proof.
 | QQQ | `5404160` | `2000000` | `43958` | `passed` | `8` | `0` | `98.0641%` | `300.0` |
 | SPY | `5404108` | `2000000` | `59163` | `passed` | `8` | `0` | `99.9003%` | `300.0` |
 
-## Week 11 Multi-Symbol LOB Proof: 10M Bound
+## Multi-Symbol LOB Proof: 10M Bound
 
 | Symbol | Job ID | Max Messages | Snapshots | Validation | Rules Run | Rules Failed | Two-Sided % | Median Spread Raw |
 | --- | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: |
@@ -53,7 +53,7 @@ focused order-event data, with structural validation and reproducible HPC proof.
 The 10M comparison produced `535626` total copied-proof snapshots
 across `SPY`, `QQQ`, and `IWM`, with all validation reports passing.
 
-## Week 12 SPY Until-EOF LOB Proof
+## SPY Until-EOF LOB Proof
 
 | Symbol | Job ID | Node | Run Mode | Stop Reason | Messages Scanned | Snapshots | Validation | Rules Run | Rules Failed | Two-Sided % | Median Spread Raw |
 | --- | --- | --- | --- | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: |
@@ -80,10 +80,3 @@ reader reaches EOF, while preserving explicit stop metadata in the manifest.
 - Multi-symbol LOB comparisons are bounded by message count; only the final `SPY` run is until EOF.
 - Large Parquet outputs remain on private Iris scratch storage.
 - Streamlit remains a thin presentation layer over existing artifacts.
-
-## Next Direction
-
-The final Weeks 12-15 phase should turn this evidence into a production-ready
-portfolio package: reproducibility docs, CI, Docker test container, data
-contracts, operations runbook, evidence index, portfolio case study, interview
-prep, and a final demo script.

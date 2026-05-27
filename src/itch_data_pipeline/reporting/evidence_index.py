@@ -35,7 +35,7 @@ def _run_group(path: Path, proof_root: Path) -> str:
         return relative.parts[0]
     name = path.name
     if name.startswith("hpc_"):
-        return "week6_hpc"
+        return "event_pipeline_hpc"
     if name.startswith("streamlit"):
         return "streamlit_smoke"
     if name.endswith(".tar.gz"):

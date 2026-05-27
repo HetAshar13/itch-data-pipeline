@@ -33,9 +33,16 @@ def _first_existing(paths: list[Path]) -> Path | None:
 
 
 def _load_week6(proof_root: Path) -> dict[str, Any]:
-    message_validation = _read_json(proof_root / "hpc_message_events_validation_5386100.json")
-    order_validation = _read_json(proof_root / "hpc_order_events_validation_5386100.json")
-    job_id, node = _job_node_from_log(proof_root / "hpc_week6_5386100.out")
+    proof_dir = _first_existing([proof_root / "event_pipeline_hpc", proof_root]) or proof_root
+    message_validation = _read_json(proof_dir / "hpc_message_events_validation_5386100.json")
+    order_validation = _read_json(proof_dir / "hpc_order_events_validation_5386100.json")
+    event_log = _first_existing(
+        [
+            proof_dir / "event_pipeline_5386100.out",
+            proof_dir / "hpc_week6_5386100.out",
+        ]
+    ) or (proof_dir / "event_pipeline_5386100.out")
+    job_id, node = _job_node_from_log(event_log)
     return {
         "job_id": job_id,
         "node": node,
@@ -132,18 +139,24 @@ def _load_lob_until_eof_runs(proof_dir: Path) -> list[dict[str, Any]]:
 
 def build_week12_final_report(
     proof_root: str | Path = "logs",
-    report_path: str | Path = "reports/week12_final_report.md",
+    report_path: str | Path = "reports/final_evidence_report.md",
 ) -> dict[str, Any]:
     proof_root = Path(proof_root)
     report = Path(report_path)
     week6 = _load_week6(proof_root)
     week10_runs = _load_lob_runs(proof_root / "week10_lob_5404108")
     week11_2m_runs = _load_lob_runs(proof_root / "week11_lob_2m")
-    week11_10m_runs = _load_lob_runs(proof_root / "week11_lob_10m")
-    week12_until_eof_runs = _load_lob_until_eof_runs(proof_root / "week12_lob_until_eof_5406828")
+    week11_10m_dir = _first_existing(
+        [proof_root / "lob_10m_multi_symbol", proof_root / "week11_lob_10m"]
+    ) or (proof_root / "lob_10m_multi_symbol")
+    until_eof_dir = _first_existing(
+        [proof_root / "lob_spy_until_eof_5406828", proof_root / "week12_lob_until_eof_5406828"]
+    ) or (proof_root / "lob_spy_until_eof_5406828")
+    week11_10m_runs = _load_lob_runs(week11_10m_dir)
+    week12_until_eof_runs = _load_lob_until_eof_runs(until_eof_dir)
     input_sha_path = _first_existing(
         [
-            proof_root / "week11_lob_10m" / "lob_manifest_SPY_2019-12-30_5404209.json",
+            week11_10m_dir / "lob_manifest_SPY_2019-12-30_5404209.json",
             proof_root / "week11_lob_2m" / "lob_manifest_SPY_2019-12-30_5404108.json",
             proof_root / "week10_lob_5404108" / "lob_manifest_SPY_2019-12-30_5404108.json",
         ]
@@ -209,7 +222,7 @@ def _render_markdown(
     week12_until_eof_runs: list[dict[str, Any]],
 ) -> str:
     total_10m_snapshots = sum(run["snapshots"] for run in week11_10m_runs)
-    return f"""# Week 12 Final Evidence Report
+    return f"""# Final Evidence Report
 
 ## Summary
 
@@ -227,9 +240,9 @@ large Parquet outputs remain outside Git.
 - Trading date: `2019-12-30`
 - Input SHA-256: `{input_sha}`
 - Raw data policy: raw Nasdaq data is not copied into Git or public reports.
-- Proof source: copied logs, manifests, validation JSON files, and DuckDB summary JSON files under `logs/`.
+- Proof source: copied logs, manifests, validation JSON files, and DuckDB summary JSON files under the curated evidence directory.
 
-## Week 6 Message And Order Event Proof
+## Message And Order Event HPC Proof
 
 | Dataset | Job ID | Node | Rows | Validation | Rules Run | Rules Failed |
 | --- | --- | --- | ---: | --- | ---: | ---: |
@@ -239,19 +252,19 @@ large Parquet outputs remain outside Git.
 This proves the project can turn parsed ITCH messages into broad audit data and
 focused order-event data, with structural validation and reproducible HPC proof.
 
-## Week 10 Single-Symbol LOB Proof
+## Single-Symbol LOB Smoke Proof
 
 | Symbol | Job ID | Max Messages | Snapshots | Validation | Rules Run | Rules Failed | Two-Sided % | Median Spread Raw |
 | --- | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: |
 {_lob_table(week10_runs)}
 
-## Week 11 Multi-Symbol LOB Proof: 2M Bound
+## Multi-Symbol LOB Proof: 2M Bound
 
 | Symbol | Job ID | Max Messages | Snapshots | Validation | Rules Run | Rules Failed | Two-Sided % | Median Spread Raw |
 | --- | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: |
 {_lob_table(week11_2m_runs)}
 
-## Week 11 Multi-Symbol LOB Proof: 10M Bound
+## Multi-Symbol LOB Proof: 10M Bound
 
 | Symbol | Job ID | Max Messages | Snapshots | Validation | Rules Run | Rules Failed | Two-Sided % | Median Spread Raw |
 | --- | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: |
@@ -260,7 +273,7 @@ focused order-event data, with structural validation and reproducible HPC proof.
 The 10M comparison produced `{total_10m_snapshots}` total copied-proof snapshots
 across `SPY`, `QQQ`, and `IWM`, with all validation reports passing.
 
-## Week 12 SPY Until-EOF LOB Proof
+## SPY Until-EOF LOB Proof
 
 | Symbol | Job ID | Node | Run Mode | Stop Reason | Messages Scanned | Snapshots | Validation | Rules Run | Rules Failed | Two-Sided % | Median Spread Raw |
 | --- | --- | --- | --- | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: |
@@ -287,11 +300,4 @@ reader reaches EOF, while preserving explicit stop metadata in the manifest.
 - Multi-symbol LOB comparisons are bounded by message count; only the final `SPY` run is until EOF.
 - Large Parquet outputs remain on private Iris scratch storage.
 - Streamlit remains a thin presentation layer over existing artifacts.
-
-## Next Direction
-
-The final Weeks 12-15 phase should turn this evidence into a production-ready
-portfolio package: reproducibility docs, CI, Docker test container, data
-contracts, operations runbook, evidence index, portfolio case study, interview
-prep, and a final demo script.
 """

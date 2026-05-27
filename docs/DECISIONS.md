@@ -8,7 +8,7 @@
 
 **Tradeoff:** Less ownership over low-level ITCH logic, but stronger focus on the data engineering layer.
 
-**Follow-up:** Verify MeatPy API limits during Week 2.
+**Follow-up:** Keep MeatPy API assumptions explicit in tests and data contracts.
 
 ## Data decision — Keep licensed market data outside Git
 

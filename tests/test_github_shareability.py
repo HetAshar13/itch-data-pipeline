@@ -69,9 +69,9 @@ def test_evidence_readme_documents_public_safe_boundaries():
         "no raw ITCH files",
         "no Nasdaq feed `.gz` files",
         "no generated `part-000.parquet` files",
-        "week6_hpc/",
-        "week11_lob_10m/",
-        "week12_lob_until_eof_5406828/",
+        "event_pipeline_hpc/",
+        "lob_10m_multi_symbol/",
+        "lob_spy_until_eof_5406828/",
     ]:
         assert expected in content
 
@@ -128,3 +128,28 @@ def test_public_docs_do_not_expose_ai_workflow_terms():
         content = path.read_text(encoding="utf-8")
         for term in forbidden_terms:
             assert term.lower() not in content.lower(), f"{term!r} found in {path}"
+
+
+def test_public_repo_does_not_track_learning_archive_or_progress_notes():
+    tracked = subprocess.run(
+        ["git", "ls-files"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.splitlines()
+
+    forbidden_prefixes = [
+        "docs/archive/",
+        "reports/archive/",
+    ]
+    forbidden_names = [
+        "WEEK_1_PLAN.md",
+        "WEEK_2_PLAN.md",
+        "WEEK4_PROFESSOR_DEMO.md",
+        "week4_showcase.md",
+        "week6_showcase.md",
+    ]
+
+    for path in tracked:
+        assert not any(path.startswith(prefix) for prefix in forbidden_prefixes), path
+        assert not any(path.endswith(name) for name in forbidden_names), path

@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 from itch_data_pipeline import cli
-from itch_data_pipeline.cli import write_week6_report
+from itch_data_pipeline.cli import write_event_pipeline_report, write_week6_report
 from itch_data_pipeline.manifests.manifest_writer import write_manifest
 from itch_data_pipeline.reporting import week6_report
 from itch_data_pipeline.utils.paths import partition_path
@@ -77,7 +77,7 @@ def test_build_week6_showcase_report_writes_markdown(monkeypatch, tmp_path: Path
     assert result["message_events_row_count"] == 100
     assert result["order_events_row_count"] == 42
     assert result["order_events_validation_status"] == "passed"
-    assert "Week 6 Showcase Report" in content
+    assert "Event Pipeline Showcase Report" in content
     assert "| A | AddOrderMessage | 60 |" in content
     assert "| add | 25 |" in content
     assert "It does not reconstruct the full order book." in content
@@ -102,5 +102,32 @@ def test_write_week6_report_cli_prints_json(capsys, monkeypatch):
     result = json.loads(captured.out)
 
     assert result["report_path"] == "reports/week6_test.md"
+    assert result["order_events_row_count"] == 42
+    assert result["order_events_validation_status"] == "passed"
+
+
+def test_write_event_pipeline_report_cli_prints_json(capsys, monkeypatch):
+    monkeypatch.setattr(
+        cli,
+        "build_week6_showcase_report",
+        lambda output_root, date, symbol="ALL", report_path="reports/event_pipeline_showcase.md", top_n=10: {
+            "report_path": report_path,
+            "message_events_row_count": 100,
+            "message_events_validation_status": "passed",
+            "order_events_row_count": 42,
+            "order_events_validation_status": "passed",
+        },
+    )
+
+    write_event_pipeline_report(
+        "outputs/local",
+        date="2019-12-30",
+        report_path="reports/event_pipeline_test.md",
+    )
+
+    captured = capsys.readouterr()
+    result = json.loads(captured.out)
+
+    assert result["report_path"] == "reports/event_pipeline_test.md"
     assert result["order_events_row_count"] == 42
     assert result["order_events_validation_status"] == "passed"
