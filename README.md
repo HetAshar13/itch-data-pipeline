@@ -12,16 +12,29 @@ The project does not implement a custom ITCH parser. MeatPy handles the
 protocol parsing and limit order book reconstruction; this repo focuses on the
 engineering layer around it.
 
+## LiquidityIQ
+
+LiquidityIQ is the business-facing product layer on top of the validated
+pipeline. It turns ITCH limit-order-book artifacts into execution liquidity intelligence:
+spread, top-5 depth, imbalance, event intensity, visible-book cost estimates,
+stress regimes, and audit-ready lineage.
+
+It is not a trading strategy, price prediction system, or full transaction cost
+analysis product. It is a realistic pre-trade and market-quality analytics app
+that shows how the pipeline can support business decisions without exposing raw
+Nasdaq data.
+
 ## At A Glance
 
 | Proof point | Result |
 | --- | --- |
+| LiquidityIQ | Read-only Streamlit analytics app with public-safe demo mode |
 | SPY until-EOF HPC run | `29,156,757` messages scanned, `614,578` LOB snapshots |
 | 10M multi-symbol LOB run | `535,626` snapshots across `SPY`, `QQQ`, and `IWM` |
 | Message-event dataset | `1,000,000` parsed ITCH message rows |
 | Order-event dataset | `796,151` order-event rows |
 | Validation | Message, order, and LOB artifacts passed structural/sanity checks |
-| Test suite | `126` passing tests |
+| Test suite | `137` passing tests |
 | Runtime proof | Docker test runtime, GitHub Actions CI, Iris SLURM logs |
 | Data safety | Raw Nasdaq data and large Parquet outputs excluded from Git |
 
@@ -39,13 +52,18 @@ flowchart TD
     F --> G
     G --> H["Validation JSON"]
     G --> I["DuckDB summaries"]
+    F --> L["LiquidityIQ analytics mart"]
+    E --> L
+    L --> M["Execution cost lab + market quality views"]
     H --> J["Reports + public-safe evidence"]
     I --> J
-    J --> K["Streamlit presentation layer"]
+    J --> K["Streamlit + documentation"]
+    M --> K
 ```
 
-Streamlit is intentionally thin. It reads existing artifacts and does not run
-extraction, validation, raw ITCH access, or analytics jobs.
+Streamlit remains read-only. It reads existing artifacts or tracked aggregate
+demo data and does not run extraction, validation, raw ITCH access, SLURM jobs,
+or data mutation.
 
 ## Engineering Decisions I Made
 
@@ -66,6 +84,8 @@ extraction, validation, raw ITCH access, or analytics jobs.
 - `message_events`: broad audit table from parsed MeatPy messages.
 - `order_events`: add, cancel, delete, replace, and execution event rows.
 - `lob_snapshots`: top-5 bid/ask limit order book snapshots for target symbols.
+- `liquidity_bars`: 1-minute liquidity mart used by LiquidityIQ for spread,
+  depth, imbalance, event intensity, ratios, scores, and stress labels.
 
 Dataset paths, schemas, validation guarantees, and raw-price policy are
 documented in [Data Contracts](docs/DATA_CONTRACTS.md).
@@ -75,6 +95,7 @@ documented in [Data Contracts](docs/DATA_CONTRACTS.md).
 Start here:
 
 - [Portfolio Case Study](reports/portfolio_case_study.md)
+- [LiquidityIQ Case Study](reports/liquidityiq_case_study.md)
 - [Final Evidence Report](reports/final_evidence_report.md)
 - [10M LOB Comparison](reports/lob_10m_comparison.md)
 - [Artifact Evidence Index](reports/artifact_evidence_index.md)
@@ -138,8 +159,11 @@ Excluded from Git:
 
 ## Limitations
 
-- Raw ITCH prices are stored as raw integer units, not normalized display prices.
+- Core datasets store ITCH prices as raw integer units; LiquidityIQ adds separate
+  display prices using an explicit `10,000` scale.
 - Validation is structural plus sanity checking; it does not prove complete market microstructure correctness.
 - Multi-symbol comparisons are bounded by message count; only SPY has an until-EOF LOB run.
+- Visible-book cost estimates use top-5 displayed depth only; they are not full
+  market-impact estimates, trading advice, or alpha signals.
 - Large Parquet outputs remain private and are intentionally excluded from Git.
 - The project avoids Spark, Airflow, Kafka, Snowflake, dbt, Prefect, ML, and dashboard sprawl.

@@ -17,6 +17,8 @@ reader can understand the data without reading every extractor.
   identity.
 - ITCH prices are stored as raw integer price units unless explicitly named
   otherwise. Do not treat raw price fields as normalized dollar prices.
+- LiquidityIQ display prices use a documented `10,000` scale and are separate
+  from raw source price fields.
 - Validation is structural plus sanity checking. It does not prove complete market microstructure correctness.
 
 ## `message_events`
@@ -166,3 +168,76 @@ Limitations:
 - Validation checks structure and basic book sanity, not perfect market
   microstructure correctness.
 - Raw price fields are not normalized dollar prices.
+
+## `liquidity_bars`
+
+Purpose:
+
+- Derived analytics mart for LiquidityIQ.
+- Converts validated `lob_snapshots` and optional `order_events` artifacts into
+  business-facing liquidity diagnostics.
+- Supports spread/depth/imbalance timelines, market-quality ratios, stress
+  labels, and visible-book execution cost context.
+
+Default grain:
+
+```text
+symbol + date + 1-minute bucket
+```
+
+Public demo path:
+
+```text
+data_fixtures/liquidityiq_demo.json
+```
+
+Private local-artifact mode:
+
+```text
+outputs/<root>/dataset=lob_snapshots/date=<date>/symbol=<symbol>/part-000.parquet
+outputs/<root>/dataset=order_events/date=<date>/symbol=ALL/part-000.parquet
+```
+
+Schema:
+
+| Field | Meaning |
+| --- | --- |
+| `symbol` | Symbol represented by the aggregate row. |
+| `bucket_start_ns` | Start of the time bucket in ITCH timestamp nanoseconds. |
+| `bucket_seconds` | Bucket width, default `60`. |
+| `snapshot_count` | Number of LOB snapshots in the bucket. |
+| `two_sided_snapshot_percent` | Percent of snapshots with both best bid and best ask. |
+| `avg_spread_1_raw` | Average level-1 spread in raw ITCH units. |
+| `avg_spread_1_display` | Display spread using the explicit `10,000` scale. |
+| `avg_mid_price_1_raw` | Average level-1 midpoint in raw ITCH units. |
+| `avg_mid_price_1_display` | Display midpoint using the explicit `10,000` scale. |
+| `avg_bid_depth_top5` | Average total visible bid size across top 5 levels. |
+| `avg_ask_depth_top5` | Average total visible ask size across top 5 levels. |
+| `avg_total_depth_top5` | Average combined top-5 bid and ask visible depth. |
+| `avg_level1_imbalance` | Average level-1 imbalance. |
+| `event_count` | Total order-event rows matched to the bucket when available. |
+| `add_count` | Add-order rows matched to the bucket. |
+| `cancel_count` | Cancel rows matched to the bucket. |
+| `delete_count` | Delete rows matched to the bucket. |
+| `replace_count` | Replace rows matched to the bucket. |
+| `execute_count` | Execution rows matched to the bucket. |
+| `cancel_to_add_ratio` | `cancel_count / add_count` when add count is positive. |
+| `execute_to_add_ratio` | `execute_count / add_count` when add count is positive. |
+| `liquidity_score` | Deterministic 0-100 score from spread, depth, imbalance, and two-sided coverage. |
+| `stress_regime` | `stable`, `watch`, or `stressed` label from the score and coverage. |
+
+Validation and safety guarantees:
+
+- Demo data is aggregate-only JSON.
+- Demo data contains no raw ITCH, no order-level rows, and no generated Parquet
+  outputs.
+- Local-artifact mode reads existing artifacts only.
+- Streamlit does not run extraction, MeatPy parsing, validation, SLURM, or data
+  mutation.
+
+Limitations:
+
+- The liquidity score is deterministic and explainable, not machine learning.
+- Visible-book cost estimates consume top-5 displayed depth only.
+- The mart is for execution liquidity diagnostics and market-quality review,
+  not trading advice, price prediction, or full transaction cost analysis.

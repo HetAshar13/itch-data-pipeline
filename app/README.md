@@ -1,16 +1,19 @@
-# Streamlit App
+# LiquidityIQ Streamlit App
 
-This app is a thin presentation layer over existing pipeline artifacts. It reads:
+LiquidityIQ is a read-only analytics product layer over existing pipeline
+artifacts. It presents liquidity bars, spread/depth/imbalance diagnostics,
+visible-book execution cost estimates, market-quality ratios, and evidence
+metadata.
 
-- `manifest.json`
-- `validation_report.json`
-- `message_events` Parquet
-- DuckDB-derived message type counts
-- optional `order_events` Parquet and DuckDB summaries when those artifacts exist
+The default `demo` mode loads tracked aggregate demo data from
+`data_fixtures/liquidityiq_demo.json`, so recruiters can run the app without raw
+Nasdaq data. `local_artifacts` mode reads private generated Parquet/JSON
+artifacts when they exist.
 
-It does not parse raw ITCH files and does not implement pipeline logic.
+The app does not parse raw ITCH, run MeatPy extraction, submit SLURM jobs, or
+mutate data.
 
-Run from the repo root after generating local artifacts:
+Run from the repo root:
 
 ```powershell
 streamlit run app/streamlit_app.py

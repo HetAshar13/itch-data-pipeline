@@ -5,12 +5,13 @@
 This project is a production-oriented data engineering pipeline for processing
 Nasdaq ITCH market data into validated, partitioned analytical artifacts. It
 uses MeatPy for ITCH parsing and limit order book reconstruction, DuckDB for
-local analytics over Parquet, Streamlit as a thin presentation layer, and Iris
-HPC with SLURM for larger proof runs.
+local analytics over Parquet, Streamlit for the read-only LiquidityIQ product
+layer, and Iris HPC with SLURM for larger proof runs.
 
 The project demonstrates the engineering work around a difficult data source:
 lineage, validation, reproducibility, operational runbooks, safe handling of
-licensed raw data, and shareable evidence artifacts.
+licensed raw data, shareable evidence artifacts, and business-facing liquidity
+analytics.
 
 ## Problem
 
@@ -44,6 +45,12 @@ Partitioned Parquet + manifest + validation JSON
         |
         v
 DuckDB summaries + reports + Streamlit presentation
+        |
+        v
+LiquidityIQ analytics product
+  - spread, depth, imbalance
+  - visible-book execution cost estimates
+  - market-quality regimes
         |
         v
 Copied proof artifacts for professor/recruiter review
@@ -82,6 +89,19 @@ Symbol-specific top-5 limit order book snapshot dataset.
 - Scope: top 5 bid and ask levels, raw ITCH price units.
 - Validation: `8` structural and sanity rules per validated run.
 
+### `liquidity_bars`
+
+Derived analytics mart used by LiquidityIQ.
+
+- Grain: symbol, date, and 1-minute time bucket.
+- Purpose: convert validated LOB and order-event artifacts into business-facing
+  liquidity diagnostics.
+- Metrics: raw/display spread, top-5 bid/ask depth, level-1 imbalance,
+  two-sided book coverage, event intensity, cancel/add ratio, execute/add ratio,
+  liquidity score, and stress regime.
+- Boundary: keeps source prices in raw ITCH units and adds separate display
+  prices using an explicit `10,000` scale.
+
 ## Validation Strategy
 
 Validation is intentionally layered:
@@ -113,8 +133,16 @@ The pipeline produces summaries such as:
 - average and median raw spread,
 - level-1 imbalance summary.
 
+LiquidityIQ extends this into a business-facing analytics layer:
+
+- executive liquidity scorecards,
+- spread, depth, and imbalance timelines,
+- deterministic visible-book execution cost scenarios,
+- market-quality ratios and stress labels,
+- evidence metadata for lineage and validation status.
+
 Streamlit reads existing artifacts only. It does not trigger extraction,
-validation, or raw ITCH access.
+validation, raw ITCH access, SLURM submission, or data mutation.
 
 ## HPC Proof
 
@@ -158,10 +186,10 @@ The public-safe workflow has three levels:
 
 Current verification:
 
-- Local suite: `126 passed`.
+- Local suite: `137 passed`.
 - Docker image: `docker build -t itch-data-pipeline:test .` succeeds.
-- Docker test run: `111 passed in 7.27s`.
-- Docker healthcheck and raw-data safety check pass in the clean container.
+- Docker test runtime supports pytest, healthcheck, and raw-data safety checks
+  without bundled raw Nasdaq data.
 
 ## Data Governance
 
@@ -183,14 +211,19 @@ enforces this through process and tooling:
 - Running larger jobs through HPC scheduling and preserving operational evidence.
 - Creating reproducible public-safe artifacts without exposing licensed data.
 - Writing tests for CLI behavior, validation, analytics, Docker configuration, reports, and safety checks.
+- Turning validated engineering artifacts into a practical analytics product for
+  execution liquidity and market-quality review.
 
 ## Limitations
 
-- LOB prices are raw ITCH integer units, not normalized display prices.
+- Core LOB prices remain raw ITCH integer units; LiquidityIQ display prices are
+  separate derived fields using an explicit scale.
 - Validation is structural plus sanity checking, not a formal proof of exchange correctness.
 - Multi-symbol comparisons are bounded by message count; only SPY has an until-EOF LOB run.
 - Large Parquet outputs remain private and are not part of the public portfolio repo.
-- Streamlit is intentionally presentation-only.
+- Visible-book cost estimates use displayed top-5 depth only. They are not full
+  transaction cost analysis, market-impact modeling, trading advice, or alpha.
+- Streamlit is read-only over existing artifacts and aggregate demo data.
 
 ## Lessons Learned
 

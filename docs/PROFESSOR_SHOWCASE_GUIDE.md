@@ -11,7 +11,8 @@ The core message:
 > data engineering layer around it: bounded and until-EOF execution,
 > partitioned Parquet datasets, manifests, input hashes, validation reports,
 > DuckDB summaries, Iris SLURM proof, Docker/CI reproducibility, and
-> public-safe evidence.
+> public-safe evidence. LiquidityIQ then shows how those validated artifacts can
+> support execution liquidity and market-quality analytics.
 
 Do not present this as a trading strategy, prediction system, or custom ITCH
 parser. Present it as a reliable market-data engineering pipeline.
@@ -23,6 +24,7 @@ Open these in advance so the walkthrough is smooth:
 - GitHub repository: `https://github.com/HetAshar13/itch-data-pipeline`
 - `reports/final_evidence_report.md`
 - `reports/portfolio_case_study.md`
+- `reports/liquidityiq_case_study.md`
 - `reports/lob_10m_comparison.md`
 - `evidence/README.md`
 - `docs/DATA_CONTRACTS.md`
@@ -76,7 +78,8 @@ Private Nasdaq ITCH .gz
      -> message_events, order_events, lob_snapshots
      -> Parquet + manifest + validation JSON
      -> DuckDB summaries
-     -> reports / evidence / Streamlit presentation
+     -> LiquidityIQ analytics mart
+     -> reports / evidence / Streamlit product app
 ```
 
 Key point:
@@ -96,6 +99,12 @@ Important distinction:
 
 > `order_events` tells us what happened. `lob_snapshots` tells us what the
 > reconstructed book looked like after those events.
+
+Then add:
+
+> LiquidityIQ derives 1-minute liquidity bars from those artifacts: spread,
+> depth, imbalance, event intensity, cancel/add ratio, execute/add ratio,
+> liquidity score, and stress label.
 
 ### 5. Final Evidence Report
 
@@ -172,12 +181,34 @@ Say:
 Do not rerun a heavy job live unless the professor explicitly asks. Prefer
 showing the reproducible command pattern and the completed logs.
 
-### 10. Streamlit
+### 10. LiquidityIQ Product Demo
+
+Open the Streamlit app if time allows:
+
+```powershell
+streamlit run app/streamlit_app.py
+```
+
+Show:
+
+- Executive Overview: liquidity score, symbol comparison, validation status.
+- Liquidity Timeline: spread, top-5 depth, imbalance, stress periods.
+- Execution Cost Lab: buy/sell visible-book scenario for a chosen order size.
+- Market Quality: event rates, cancel/add ratio, execute/add ratio.
+- Evidence: mode, limitations, lineage.
+
+Say:
+
+> LiquidityIQ is not a trading model or full TCA. It is an execution liquidity
+> intelligence layer built on validated ITCH artifacts. It estimates cost
+> against visible top-5 book depth only.
+
+### 11. Streamlit Boundary
 
 If shown, keep it brief:
 
-> Streamlit is only a presentation layer. It reads existing artifacts and does
-> not run extraction, validation, analytics, or raw ITCH access.
+> Streamlit is read-only. It reads existing artifacts or aggregate demo data and
+> does not run extraction, validation, SLURM, or raw ITCH access.
 
 ## Exact Results To Mention
 
@@ -190,7 +221,8 @@ If shown, keep it brief:
 | IWM 10M LOB | Job `5404485`, `156,647` snapshots, validation passed |
 | 10M multi-symbol total | `535,626` snapshots |
 | SPY until EOF | Job `5406828`, `29,156,757` messages scanned, `614,578` snapshots |
-| Engineering quality | `126` local tests, Docker runtime, GitHub Actions CI |
+| LiquidityIQ | Read-only analytics app, aggregate demo mode, visible-book cost lab |
+| Engineering quality | `137` local tests, Docker runtime, GitHub Actions CI |
 
 ## Questions To Be Ready For
 
@@ -201,14 +233,17 @@ If shown, keep it brief:
 > extraction runners, stable Parquet schemas, partitioned output layout,
 > manifests, input SHA-256 lineage, validation reports, DuckDB analytics, SLURM
 > execution, copied proof artifacts, Docker/CI reproducibility, and public-safe
-> documentation.
+> documentation. LiquidityIQ adds the business analytics layer: liquidity bars,
+> scores, stress labels, market-quality ratios, and visible-book execution cost
+> estimates.
 
 **Why is this useful?**
 
 > The value is reliability and reproducibility. The project turns licensed
 > binary market data into validated, queryable artifacts with traceable lineage
-> and HPC execution proof. That is the kind of engineering needed before any
-> serious downstream analysis can be trusted.
+> and HPC execution proof. LiquidityIQ then turns those artifacts into practical
+> execution liquidity diagnostics. That is the kind of engineering needed before
+> any serious downstream analysis can be trusted.
 
 **What does validation prove?**
 
@@ -223,7 +258,15 @@ If shown, keep it brief:
 **Why keep prices raw?**
 
 > The project stores ITCH prices as raw integer units to avoid claiming price
-> normalization work that was not part of the validated pipeline.
+> normalization work that was not part of the validated pipeline. LiquidityIQ
+> adds separate display prices using an explicit `10,000` scale.
+
+**What is the business value of LiquidityIQ?**
+
+> It helps users identify when displayed liquidity is strong or weak, compare
+> symbols, detect stress windows, and estimate whether a visible top-5 book can
+> absorb a simple buy or sell scenario. It is pre-trade and market-quality
+> intelligence, not trading advice.
 
 ## What Not To Do
 
@@ -231,7 +274,7 @@ If shown, keep it brief:
 - Do not claim market prediction or alpha.
 - Do not claim validation proves complete exchange correctness.
 - Do not send raw `.gz` ITCH files through email or GitHub.
-- Do not make Streamlit the centerpiece.
+- Do not describe LiquidityIQ as alpha, prediction, or full TCA.
 - Do not over-focus on week numbers; present it as one complete pipeline.
 
 ## Recommended Closing
@@ -241,6 +284,7 @@ Say:
 > The project is now a public-safe but technically complete data engineering
 > case study. It demonstrates reliable processing of licensed ITCH data using
 > MeatPy, validated Parquet datasets, DuckDB summaries, Iris SLURM execution,
-> and reproducible evidence. I would like your feedback on whether the strongest
-> next academic direction would be deeper LOB correctness validation, more dates
-> and symbols, or performance profiling.
+> reproducible evidence, and a read-only LiquidityIQ analytics layer. I would
+> like your feedback on whether the strongest next direction would be deeper LOB
+> correctness validation, more dates and symbols, performance profiling, or
+> extending LiquidityIQ into a fuller market-quality research tool.

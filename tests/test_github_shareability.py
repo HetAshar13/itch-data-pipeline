@@ -11,7 +11,10 @@ def test_readme_is_recruiter_ready_and_public_safe():
         "29,156,757",
         "614,578",
         "535,626",
-        "126",
+        "137",
+        "LiquidityIQ",
+        "execution liquidity intelligence",
+        "reports/liquidityiq_case_study.md",
         "Docker",
         "GitHub Actions CI",
         "Iris SLURM",
@@ -95,6 +98,7 @@ def test_gitignore_keeps_private_and_generated_artifacts_out_of_git():
 def test_key_public_reports_are_not_empty():
     for report_path in [
         "reports/portfolio_case_study.md",
+        "reports/liquidityiq_case_study.md",
         "reports/final_evidence_report.md",
         "reports/lob_10m_comparison.md",
     ]:

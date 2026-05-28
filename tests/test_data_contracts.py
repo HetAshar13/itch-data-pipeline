@@ -27,3 +27,6 @@ def test_data_contracts_document_raw_price_policy_and_validation_boundary():
     assert "raw integer price units" in content
     assert "does not prove complete market microstructure correctness" in content
     assert "outputs/<root>/dataset=lob_snapshots/date=<date>/symbol=<symbol>/part-000.parquet" in content
+    assert "`liquidity_bars`" in content
+    assert "data_fixtures/liquidityiq_demo.json" in content
+    assert "cancel_to_add_ratio" in content
