@@ -186,7 +186,7 @@ The public-safe workflow has three levels:
 
 Current verification:
 
-- Local suite: `137 passed`.
+- Local suite: `138 passed`.
 - Docker image: `docker build -t itch-data-pipeline:test .` succeeds.
 - Docker test runtime supports pytest, healthcheck, and raw-data safety checks
   without bundled raw Nasdaq data.

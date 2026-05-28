@@ -85,7 +85,7 @@ HPC workloads:
 - `535,626` 10M multi-symbol LOB snapshots across SPY, QQQ, and IWM.
 - `1,000,000` message-event rows.
 - `796,151` order-event rows.
-- `137` local tests.
+- `138` local tests.
 
 ## Why It Matters To Fintech Firms
 

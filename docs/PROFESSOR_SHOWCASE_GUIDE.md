@@ -222,7 +222,7 @@ If shown, keep it brief:
 | 10M multi-symbol total | `535,626` snapshots |
 | SPY until EOF | Job `5406828`, `29,156,757` messages scanned, `614,578` snapshots |
 | LiquidityIQ | Read-only analytics app, aggregate demo mode, visible-book cost lab |
-| Engineering quality | `137` local tests, Docker runtime, GitHub Actions CI |
+| Engineering quality | `138` local tests, Docker runtime, GitHub Actions CI |
 
 ## Questions To Be Ready For
 

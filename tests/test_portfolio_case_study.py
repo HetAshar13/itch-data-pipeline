@@ -34,7 +34,7 @@ def test_portfolio_case_study_contains_evidence_and_safety_boundaries():
         "535,626",
         "29,156,757",
         "614,578",
-        "137 passed",
+        "138 passed",
         "raw Nasdaq data",
         "raw ITCH integer units",
         "does not prove complete market microstructure correctness",

@@ -11,10 +11,11 @@ def test_readme_is_recruiter_ready_and_public_safe():
         "29,156,757",
         "614,578",
         "535,626",
-        "137",
+        "138",
         "LiquidityIQ",
         "execution liquidity intelligence",
         "reports/liquidityiq_case_study.md",
+        "reports/linkedin_assets/liquidityiq_overview.png",
         "Docker",
         "GitHub Actions CI",
         "Iris SLURM",
@@ -110,6 +111,18 @@ def test_key_public_reports_are_not_empty():
     assert "QQQ" in comparison
     assert "IWM" in comparison
     assert "10000000" in comparison
+
+
+def test_public_readme_links_liquidityiq_screenshots():
+    content = Path("README.md").read_text(encoding="utf-8")
+
+    for screenshot in [
+        "reports/linkedin_assets/liquidityiq_overview.png",
+        "reports/linkedin_assets/liquidityiq_execution_cost_lab.png",
+        "reports/linkedin_assets/liquidityiq_evidence.png",
+    ]:
+        assert screenshot in content
+        assert Path(screenshot).exists()
 
 
 def test_public_docs_do_not_expose_ai_workflow_terms():

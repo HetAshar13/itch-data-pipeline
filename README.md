@@ -24,6 +24,8 @@ analysis product. It is a realistic pre-trade and market-quality analytics app
 that shows how the pipeline can support business decisions without exposing raw
 Nasdaq data.
 
+![LiquidityIQ overview](reports/linkedin_assets/liquidityiq_overview.png)
+
 ## At A Glance
 
 | Proof point | Result |
@@ -34,7 +36,7 @@ Nasdaq data.
 | Message-event dataset | `1,000,000` parsed ITCH message rows |
 | Order-event dataset | `796,151` order-event rows |
 | Validation | Message, order, and LOB artifacts passed structural/sanity checks |
-| Test suite | `137` passing tests |
+| Test suite | `138` passing tests |
 | Runtime proof | Docker test runtime, GitHub Actions CI, Iris SLURM logs |
 | Data safety | Raw Nasdaq data and large Parquet outputs excluded from Git |
 
@@ -100,6 +102,12 @@ Start here:
 - [10M LOB Comparison](reports/lob_10m_comparison.md)
 - [Artifact Evidence Index](reports/artifact_evidence_index.md)
 - [Curated Evidence Artifacts](evidence/README.md)
+
+## Product Screenshots
+
+| Overview | Execution Cost Lab | Evidence |
+| --- | --- | --- |
+| ![Overview](reports/linkedin_assets/liquidityiq_overview.png) | ![Execution Cost Lab](reports/linkedin_assets/liquidityiq_execution_cost_lab.png) | ![Evidence](reports/linkedin_assets/liquidityiq_evidence.png) |
 
 The curated `evidence/` directory contains SLURM logs, manifests, validation
 JSON, and DuckDB summary JSON. It does not contain raw ITCH, `part-000.parquet`,

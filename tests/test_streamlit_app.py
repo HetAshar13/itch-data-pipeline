@@ -11,4 +11,4 @@ def test_streamlit_app_renders_liquidityiq_demo_without_extraction():
     assert "Executive Overview" in [subheader.value for subheader in app.subheader]
     assert "Execution Cost Lab" in [subheader.value for subheader in app.subheader]
     assert "Evidence" in [subheader.value for subheader in app.subheader]
-    assert "Liquidity score" in [metric.label for metric in app.metric]
+    assert "Data Mode" in [header.value for header in app.header]
