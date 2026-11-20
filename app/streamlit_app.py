@@ -323,7 +323,6 @@ st.markdown(
   </p>
   <div class="pill-row">
     <span class="pill">Read-only app</span>
-    <span class="pill">Public-safe demo mode</span>
     <span class="pill">No raw ITCH in Git</span>
     <span class="pill">Visible top-5 book model</span>
   </div>
@@ -344,6 +343,8 @@ with st.sidebar:
 context = _load_context(mode, output_root, date, symbols)
 metadata = context.get("metadata", {})
 evidence = context.get("evidence", {})
+data_source = "Local order-book artifacts" if metadata.get("mode") == "local_artifacts" else "Bundled synthetic demo data"
+st.caption(f"Data source: {data_source}")
 bars = _format_bucket_labels(_as_frame(context.get("liquidity_buckets", [])))
 snapshots = _as_frame(context.get("execution_snapshots", []))
 

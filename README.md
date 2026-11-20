@@ -2,27 +2,24 @@
 
 [![CI](https://github.com/HetAshar13/itch-data-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/HetAshar13/itch-data-pipeline/actions/workflows/ci.yml)
 
-I built this project to show the data engineering work around a difficult market
-data source: Nasdaq ITCH is high-volume, binary, licensed data, and it is not a
-ready-made analytics table. The pipeline turns parsed ITCH messages into
-validated, partitioned artifacts with lineage, validation reports, DuckDB
-summaries, Docker/CI checks, and Iris HPC proof.
+Nasdaq records an order arriving, changing or disappearing as a message. This
+pipeline turns those messages into snapshots of the buy and sell orders visible
+at each price. MeatPy reconstructs the order book. Python writes the snapshots to
+Parquet, checks them, and makes them available to query with DuckDB.
 
-The project does not implement a custom ITCH parser. MeatPy handles the
-protocol parsing and limit order book reconstruction; this repo focuses on the
-engineering layer around it.
+On the University of Luxembourg’s Iris cluster, the full SPY run scanned
+29,156,757 feed messages and produced 614,578 snapshots. Its manifest records
+the end of the input file, and all eight structural checks passed.
+[Open the run evidence](reports/final_evidence_report.md).
 
 ## LiquidityIQ
 
-LiquidityIQ is the business-facing product layer on top of the validated
-pipeline. It turns ITCH limit-order-book artifacts into execution liquidity intelligence:
-spread, top-5 depth, imbalance, event intensity, visible-book cost estimates,
-stress regimes, and audit-ready lineage.
-
-It is not a trading strategy, price prediction system, or full transaction cost
-analysis product. It is a realistic pre-trade and market-quality analytics app
-that shows how the pipeline can support business decisions without exposing raw
-Nasdaq data.
+LiquidityIQ is a read-only Streamlit dashboard for execution liquidity intelligence.
+If you wanted to buy 50,000 shares, how many could fill against the five best
+ask prices, and what would those shares cost relative to the midpoint?
+The estimate uses displayed depth in a single order-book snapshot.
+The default dashboard uses bundled synthetic aggregates. The linked evidence
+documents the separate HPC run on licensed feed data.
 
 ![LiquidityIQ overview](reports/linkedin_assets/liquidityiq_overview.png)
 

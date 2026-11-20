@@ -32,11 +32,8 @@ def lob_snapshot_summary(
             COUNT(*)::BIGINT AS snapshot_count,
             MIN(timestamp_ns)::BIGINT AS first_timestamp_ns,
             MAX(timestamp_ns)::BIGINT AS last_timestamp_ns,
-            SUM(
-                CASE
-                    WHEN bid_price_1_raw IS NOT NULL AND ask_price_1_raw IS NOT NULL
-                    THEN 1 ELSE 0
-                END
+            COUNT(*) FILTER (
+                WHERE bid_price_1_raw IS NOT NULL AND ask_price_1_raw IS NOT NULL
             )::BIGINT AS two_sided_snapshot_count,
             AVG(spread_1_raw) AS avg_spread_1_raw,
             MEDIAN(spread_1_raw) AS median_spread_1_raw,
@@ -46,7 +43,7 @@ def lob_snapshot_summary(
         FROM read_parquet(?)
         """,
         params=[str(parquet_path)],
-    ).fetchone()
+    ).fetchall()[0]
 
     snapshot_count = int(row[0])
     two_sided_count = int(row[3])
