@@ -1,8 +1,10 @@
+from pathlib import Path
+
 from streamlit.testing.v1 import AppTest
 
 
 def test_streamlit_app_renders_liquidityiq_demo_without_extraction():
-    app = AppTest.from_file("app/streamlit_app.py")
+    app = AppTest.from_file(Path(__file__).resolve().parents[1] / "app" / "streamlit_app.py")
 
     app.run(timeout=30)
 
