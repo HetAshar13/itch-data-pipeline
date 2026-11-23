@@ -2,15 +2,14 @@
 
 [![CI](https://github.com/HetAshar13/itch-data-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/HetAshar13/itch-data-pipeline/actions/workflows/ci.yml)
 
-Nasdaq records an order arriving, changing or disappearing as a message. This
-pipeline turns those messages into snapshots of the buy and sell orders visible
-at each price. MeatPy reconstructs the order book. Python writes the snapshots to
-Parquet, checks them, and makes them available to query with DuckDB.
+This pipeline processes binary Nasdaq TotalView-ITCH 5.0 files. MeatPy
+reconstructs the limit order book from order-level messages. The pipeline
+exports event datasets and snapshots of the five best bid and ask levels,
+aggregated by price, to partitioned Parquet for DuckDB queries.
 
-On the University of Luxembourg’s Iris cluster, the full SPY run scanned
-29,156,757 feed messages and produced 614,578 snapshots. Its manifest records
-the end of the input file, and all eight structural checks passed.
-[Open the run evidence](reports/final_evidence_report.md).
+On the University of Luxembourg's Iris cluster, the SPY job scanned
+29,156,757 feed messages to end of file and produced 614,578 SPY snapshots.
+All eight structural checks passed. [Open the run evidence](reports/final_evidence_report.md).
 
 ## Buying 50,000 shares in LiquidityIQ
 
