@@ -12,16 +12,20 @@ On the University of Luxembourg’s Iris cluster, the full SPY run scanned
 the end of the input file, and all eight structural checks passed.
 [Open the run evidence](reports/final_evidence_report.md).
 
-## LiquidityIQ
+## Buying 50,000 shares in LiquidityIQ
 
-LiquidityIQ is a read-only Streamlit dashboard for execution liquidity intelligence.
-If you wanted to buy 50,000 shares, how many could fill against the five best
-ask prices, and what would those shares cost relative to the midpoint?
-The estimate uses displayed depth in a single order-book snapshot.
-The default dashboard uses bundled synthetic aggregates. The linked evidence
-documents the separate HPC run on licensed feed data.
+A 50,000-share QQQ buy finds 42,500 shares across the five best asks in the
+bundled demo (6,500 + 7,500 + 8,500 + 9,500 + 10,500). Those shares have an
+estimated weighted average price of $213.44. The remaining 7,500 have no
+visible price in this snapshot. [Check the five quantities](data_fixtures/liquidityiq_demo.json).
 
-![LiquidityIQ overview](reports/linkedin_assets/liquidityiq_overview.png)
+![Execution Cost Lab with a synthetic QQQ buy of 50,000 shares and 42,500 shares visible](reports/linkedin_assets/liquidityiq_execution_cost_lab.png)
+
+The Streamlit app reads a synthetic snapshot for this example. The separate
+Iris SPY run used licensed market data. Its [run manifest](evidence/lob_spy_until_eof_5406828/lob_manifest_SPY_2019-12-30_until_eof_5406828.json)
+records the end of the input file. Its [validation report](evidence/lob_spy_until_eof_5406828/lob_validation_SPY_2019-12-30_until_eof_5406828.json)
+records eight checks, including agreement between the manifest and Parquet
+row counts and a best bid at or below the best ask in two-sided snapshots.
 
 ## At A Glance
 
@@ -41,42 +45,28 @@ documents the separate HPC run on licensed feed data.
 
 ```mermaid
 flowchart TD
-    A["Private raw Nasdaq ITCH file"] --> B["MeatPy parsing and LOB reconstruction"]
-    B --> C["Pipeline runners"]
-    C --> D["message_events"]
-    C --> E["order_events"]
-    C --> F["lob_snapshots"]
-    D --> G["Partitioned Parquet + manifest"]
-    E --> G
-    F --> G
-    G --> H["Validation JSON"]
-    G --> I["DuckDB summaries"]
-    F --> L["LiquidityIQ analytics mart"]
-    E --> L
-    L --> M["Execution cost lab + market quality views"]
-    H --> J["Reports + public-safe evidence"]
-    I --> J
-    J --> K["Streamlit + documentation"]
-    M --> K
+    A["Licensed Nasdaq ITCH file"] --> B["MeatPy decodes messages and reconstructs the book"]
+    B --> C["Partitioned message, order and book datasets"]
+    C --> D["Manifests and structural checks"]
+    D --> E["DuckDB queries over local Parquet"]
+    E --> F["Read-only LiquidityIQ dashboard"]
+    G["Bundled synthetic demo fixture"] --> F
 ```
 
 Streamlit remains read-only. It reads existing artifacts or tracked aggregate
 demo data and does not run extraction, validation, raw ITCH access, SLURM jobs,
 or data mutation.
 
-## Engineering Decisions I Made
+## Engineering decisions
 
-- I used MeatPy instead of writing a parser because protocol correctness belongs
-  in a dedicated market-data library, not in a portfolio pipeline.
-- I kept `message_events` as a broad audit dataset and `order_events` as a
-  focused analytical dataset so the pipeline preserves both coverage and
-  usability.
-- I validate before querying so DuckDB summaries are based on artifacts that
-  already passed structural and sanity checks.
-- I store ITCH prices as raw integer units to avoid pretending the project has
-  completed price-normalization work it has not done.
-- I copy back small proof artifacts rather than raw data or large Parquet files
-  because the raw feed is licensed and the GitHub repo must stay public-safe.
+- MeatPy handles exchange message decoding and book reconstruction. The
+  pipeline handles extraction, partitioning, validation and analytics.
+- Separate message, order and book datasets preserve broad feed coverage and
+  give order-event queries a smaller table to read.
+- Core datasets preserve the feed's integer prices. LiquidityIQ applies a
+  10,000-unit scale for display.
+- Manifests, summaries and validation reports let reviewers inspect the Iris
+  runs while the licensed feed and generated Parquet stay private.
 
 ## Data Products
 
@@ -102,9 +92,8 @@ Start here:
 
 ## Product Screenshots
 
-| Overview | Execution Cost Lab | Evidence |
-| --- | --- | --- |
-| ![Overview](reports/linkedin_assets/liquidityiq_overview.png) | ![Execution Cost Lab](reports/linkedin_assets/liquidityiq_execution_cost_lab.png) | ![Evidence](reports/linkedin_assets/liquidityiq_evidence.png) |
+[Dashboard overview](reports/linkedin_assets/liquidityiq_overview.png) ·
+[Evidence tab](reports/linkedin_assets/liquidityiq_evidence.png)
 
 The curated `evidence/` directory contains SLURM logs, manifests, validation
 JSON, and DuckDB summary JSON. It does not contain raw ITCH, `part-000.parquet`,
@@ -171,4 +160,3 @@ Excluded from Git:
 - Visible-book cost estimates use top-5 displayed depth only; they are not full
   market-impact estimates, trading advice, or alpha signals.
 - Large Parquet outputs remain private and are intentionally excluded from Git.
-- The project avoids Spark, Airflow, Kafka, Snowflake, dbt, Prefect, ML, and dashboard sprawl.
