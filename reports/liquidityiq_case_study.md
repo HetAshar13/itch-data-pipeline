@@ -1,5 +1,11 @@
 # LiquidityIQ Case Study
 
+In the bundled QQQ snapshot, a 50,000-share buy fills an estimated 42,500
+shares across the five displayed ask levels at a weighted average of $213.44.
+The remaining 7,500 shares have no visible price in that snapshot. For the
+inputs and result, see the [demo fixture](../data_fixtures/liquidityiq_demo.json)
+and [Execution Cost Lab](linkedin_assets/liquidityiq_execution_cost_lab.png).
+
 ## Business Problem
 
 Execution teams, market-structure analysts, and data engineering teams need a
@@ -86,17 +92,6 @@ HPC workloads:
 - `1,000,000` message-event rows.
 - `796,151` order-event rows.
 - `138` local tests.
-
-## Why It Matters To Fintech Firms
-
-The product shows a realistic path from difficult licensed market data to
-business-facing analytics. A firm could adapt the same pattern for pre-trade
-liquidity review, market-quality monitoring, client reporting, data quality
-assurance, and audit-ready evidence around market-data processing.
-
-The value is not prediction. The value is reliable transformation,
-reproducible evidence, and clear analytics that help people decide whether a
-market is currently easy or expensive to trade.
 
 ## Limitations
 
