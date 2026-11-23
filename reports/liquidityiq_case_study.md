@@ -6,26 +6,19 @@ The remaining 7,500 shares have no visible price in that snapshot. For the
 inputs and result, see the [demo fixture](../data_fixtures/liquidityiq_demo.json)
 and [Execution Cost Lab](linkedin_assets/liquidityiq_execution_cost_lab.png).
 
-## Business Problem
+## Pre-trade use
 
-Execution teams, market-structure analysts, and data engineering teams need a
-fast way to understand when a symbol has usable displayed liquidity. Raw ITCH
-messages and reconstructed books are too low-level for business review, while a
-single chart of price does not explain execution friction.
+A single best ask gives a buyer a price and the quantity available at that
+price. LiquidityIQ walks the displayed ask levels to estimate how much of
+an order can fill, its weighted average price and the cost relative to
+the midpoint. A desk can compare proposed order sizes or time windows
+using displayed liquidity. The estimates use one visible book snapshot
+at a time and leave out market impact, queue position and hidden liquidity.
 
-LiquidityIQ turns validated ITCH limit-order-book artifacts into execution
-liquidity intelligence: spread, visible depth, imbalance, event intensity,
-stress regimes, and deterministic visible-book cost scenarios.
-
-## Target Users
-
-- Execution analysts checking when displayed liquidity is strong or weak.
-- Market-quality teams monitoring spread, depth, imbalance, and cancellation
-  pressure.
-- Data engineers proving that licensed market data can be transformed into
-  reproducible, validated analytics artifacts.
-- Recruiters and engineering reviewers evaluating whether the project moves
-  beyond ingestion into business value.
+The underlying event and book datasets also support comparisons of spreads,
+depth and cancellation activity. Input hashes, run manifests and validation
+reports document how the licensed feed was processed and can be shared
+independently of the feed.
 
 ## Product Design
 
